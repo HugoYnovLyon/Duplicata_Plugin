@@ -26,14 +26,33 @@ if (isset($_SESSION['glpiactiveprofile']['interface'])
                 return
             }
 
-            if ($("#create_project").length > 0) {
+            if ($("#create_duplicata").length > 0) {
                 return;
             }
             // #3A5693
-            var project_html = "<i class='fa fas fa-project fa-project-alt pointer' style='font-size: 20px;' id='create_duplicata_project'></i>";
+            var project_html = "<input class='submit' type='submit' name='newproject' id='create_duplicata'></input>";
 
 
+            $("td:contains('{$add_dropdowngroups}')>span.fa")
+                .after(project_html);
+            callback();
         };
-        
-    };
+
+        duplicata_bindClick = _.once(function()) {
+            $(document).on("click", "#create_duplicata"), _.once(function(e) {
+                $.ajax({
+                    url: '../plugins/duplicata/ajax/duplicata.php' ,
+                    data: {
+                        'projects_id' : getUrlParameter('id')
+                    },
+                    success: function(response, opts) {
+                        $("[id^='add_dropdowngroups']")
+                    }
+                })
+            });
+        }
+
+    });
+JAVASCRIPT;
+    echo $JS;
 }
